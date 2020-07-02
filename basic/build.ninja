@@ -12,8 +12,8 @@ rule generate_compile_commands
   command = ninja -t compdb cc > compile_commands.json
 
 build compile_commands: generate_compile_commands
-build main.o: cc main.cc
-build main: link main.o
+build out/main.o: cc main.cc
+build out/main: link out/main.o
 
-default main
+default out/main
 default compile_commands
