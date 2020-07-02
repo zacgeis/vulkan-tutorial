@@ -1,0 +1,19 @@
+compiler = clang++
+cflags = -std=c++17 -g -Wall -I. -I/usr/local/Cellar/glfw/3.3.2/include -I/usr/local/include
+ldflags = -lglfw -lvulkan
+
+rule cc
+  command = $compiler $cflags -c $in -o $out
+
+rule link
+  command = $compiler $ldflags $in -o $out
+
+rule generate_compile_commands
+  command = ninja -t compdb cc > compile_commands.json
+
+build compile_commands: generate_compile_commands
+build main.o: cc main.cc
+build main: link main.o
+
+default main
+default compile_commands
